@@ -20,15 +20,23 @@ dotenv.config();
 const server = express();
 const PORT = process.env.PORT || 3001;
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://movie-booking-frontend-seven-fawn.vercel.app",
+];
+
 server.use(cookieParser());
 server.use(express.json());
 
+server.get("/health", (req, res) => res.json({ status: "ok" }));
+
 server.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
   }),
 );
+
 server.use(express.json());
 server.use("/api/movies", movieRouter);
 server.use("/api/theater", theaterRouter);
@@ -51,7 +59,7 @@ const httpServer = http.createServer(server);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
     credentials: true,
   },
