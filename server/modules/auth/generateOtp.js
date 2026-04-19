@@ -10,6 +10,7 @@ export const generateOTP = () => {
 
 // hash data (email + otp + expires)
 export const hashOTP = (data) => {
+  console.log("HASHING_SECRET used:", process.env.HASHING_SECRET); // add this
   return crypto
     .createHmac("sha256", process.env.HASHING_SECRET)
     .update(String(data))
