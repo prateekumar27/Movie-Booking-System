@@ -122,12 +122,14 @@ export const verifyOtp = async (req, res, next) => {
     // 8. send tokens in cookies
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
+      sameSite: "none",
       maxAge: 60 * 60 * 1000,
     });
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -159,8 +161,8 @@ export const logout = async (req, res, next) => {
       await deleteRefreshToken(refreshToken);
     }
 
-    res.clearCookie("accessToken");
-    res.clearCookie("refreshToken");
+    res.clearCookie("accessToken", { sameSite: "none", secure: true });
+    res.clearCookie("refreshToken", { sameSite: "none", secure: true });
 
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
@@ -208,14 +210,14 @@ export const refreshToken = async (req, res, next) => {
     // set new cookies
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
       maxAge: 60 * 60 * 1000,
     });
     res.cookie("refreshToken", newRefreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
