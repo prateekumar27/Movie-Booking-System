@@ -17,14 +17,13 @@ import bookingRoutes from "./modules/booking/booking.route.js";
 
 dotenv.config();
 
-const server = express();
-
 server.use(
   cors({
     origin: allowedOrigins,
     credentials: true,
   }),
 );
+const server = express();
 
 const PORT = process.env.PORT || 3001;
 
