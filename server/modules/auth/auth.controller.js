@@ -122,14 +122,14 @@ export const verifyOtp = async (req, res, next) => {
     // 8. send tokens in cookies
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: true, // ✅ always true
+      sameSite: "none", // ✅ required for cross-origin
       maxAge: 60 * 60 * 1000,
     });
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: true, // ✅ always true
+      sameSite: "none", // ✅ required for cross-origin
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
