@@ -17,21 +17,20 @@ import bookingRoutes from "./modules/booking/booking.route.js";
 
 dotenv.config();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://movie-booking-frontend-seven-fawn.vercel.app",
+];
+
+const server = express();
+const PORT = process.env.PORT || 3001;
+
 server.use(
   cors({
     origin: allowedOrigins,
     credentials: true,
   }),
 );
-const server = express();
-
-const PORT = process.env.PORT || 3001;
-
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://movie-booking-frontend-seven-fawn.vercel.app",
-];
-
 server.use(cookieParser());
 server.use(express.json());
 
