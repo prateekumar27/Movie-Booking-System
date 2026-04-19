@@ -18,6 +18,14 @@ import bookingRoutes from "./modules/booking/booking.route.js";
 dotenv.config();
 
 const server = express();
+
+server.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  }),
+);
+
 const PORT = process.env.PORT || 3001;
 
 const allowedOrigins = [
@@ -29,13 +37,6 @@ server.use(cookieParser());
 server.use(express.json());
 
 server.get("/health", (req, res) => res.json({ status: "ok" }));
-
-server.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-  }),
-);
 
 server.use(express.json());
 server.use("/api/movies", movieRouter);
